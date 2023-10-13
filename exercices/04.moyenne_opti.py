@@ -9,4 +9,8 @@ while (choix == "o"):
     moyenne = moyenne + note
     
     choix = input("Voulez vous saisir une nouvelle note ? (o/n)")
+    
+# AFFICHAGE
+    
 print(f"La moyenne de la classe est : {round(moyenne / len(liste_notes), 2)}")
+# La moyenne optimisée est de : XX (nb zéro : X)
