@@ -19,10 +19,11 @@ class Voiture:
         if (not self.est_demarree): 
             self.est_demarree = True
             
-    def avancer(self, vitesse_cible):
+    def avancer(self, vitesse_cible, pas = 1):
         if (self.est_demarree):
-            for i in range(self.vitesse, min(vitesse_cible, self.vitesse_max)):
-                self.vitesse += 1
+            vitesse_cible = min(vitesse_cible, self.vitesse_max + 1)
+            for vit in range(self.vitesse, vitesse_cible, pas):
+                self.vitesse = vit
                 print(self.vitesse)
 
 ma_voiture = Voiture()
