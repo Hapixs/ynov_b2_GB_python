@@ -6,37 +6,50 @@ print("\n")
 class Voiture:
     def __init__(self, couleur="rouge"):
         self.couleur = couleur
-        self.vitesse_max = 220
-        self.vitesse = 0
+        self._vitesse_max = 220
+        self._vitesse_securite = 230
+        self._vitesse = 0
         self.est_demarree = False
         print("Création d'une voiture")
 
     def __str__(self):
-        return f"Une voiture {self.couleur} avec une vitesse max de {self.vitesse_max} km/h"
+        return f"Une voiture {self.couleur} avec une vitesse max de {self._vitesse_max} km/h"
 
+    @property
+    def vitesse(self):
+        print("JE SUIS UNE FONCTION")
+        return self._vitesse
+
+    @vitesse.setter
+    def vitesse(self, nouvelle_vitesse):
+        if (nouvelle_vitesse < self._vitesse_securite):
+            self._vitesse = nouvelle_vitesse
+        else:
+            print("RISQUE DE CASSE MOTEUR !")
+
+    def get_vitesse(self):
+        return self._vitesse
+    
+    def set_vitesse(self, nouvelle_vitesse):
+        if (nouvelle_vitesse < self._vitesse_securite):
+            self._vitesse = nouvelle_vitesse
 
     def demarrer(self):
-        if (not self.est_demarree): 
+        if not self.est_demarree:
             self.est_demarree = True
-            
-    def avancer(self, vitesse_cible, pas = 1):
-        if (self.est_demarree):
-            vitesse_cible = min(vitesse_cible, self.vitesse_max + 1)
-            for vit in range(self.vitesse, vitesse_cible, pas):
-                self.vitesse = vit
-                print(self.vitesse)
+
+    def avancer(self, vitesse_cible, pas=1):
+        if self.est_demarree:
+            vitesse_cible = min(vitesse_cible, self._vitesse_max + 1)
+            for vit in range(self._vitesse, vitesse_cible, pas):
+                self._vitesse = vit
+                print(self._vitesse)
+
 
 ma_voiture = Voiture()
 print(ma_voiture)
 ma_voiture.demarrer()
 ma_voiture.avancer(20)
-ma_voiture.avancer(100)
-ma_voiture.avancer(500)
-# print(ma_voiture.couleur)
 
-ta_voiture = Voiture("bleue")
-print(ta_voiture)
-# print(ta_voiture.couleur)
-
-# sa_voiture = Voiture()
-# print(sa_voiture.couleur)
+print(ma_voiture.vitesse)
+ma_voiture.vitesse = 500
