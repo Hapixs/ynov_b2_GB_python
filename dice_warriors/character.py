@@ -32,10 +32,16 @@ class Character:
         print(healthbar)
 
     def decrease_health(self, amount):
+        # if self._current_hp - amount < 0:
+        #     amount = self._current_hp
         self._current_hp -= amount
+        if self._current_hp < 0:
+            self._current_hp = 0
         self.show_healthbar()
         
     def attack(self, target: Character):
+        if not self.is_alive():
+            return
         roll = self._dice.roll()
         damages = self._attack_value + roll
         print(f"{self._name} attack with {damages} damages (attack: {self._attack_value} + roll: {roll})")
@@ -47,9 +53,15 @@ class Character:
         print(f"{self._name} take {wounds} wounds (damages: {damages} - defense: {self._defense_value} - roll: {roll})")
         self.decrease_health(wounds)
 
+class Warrior(Character):
+    pass
+
+class Mage(Character):
+    pass
+
 if __name__ == "__main__":
-    character1 = Character("Salim", 20, 8, 3, Dice(6))
-    character2 = Character("Lisa", 20, 8, 3, Dice(6))
+    character1 = Warrior("Salim", 20, 8, 3, Dice(6))
+    character2 = Mage("Lisa", 20, 8, 3, Dice(6))
     print(character1)
     print(character2)
     
