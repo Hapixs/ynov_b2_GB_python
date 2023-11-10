@@ -1,9 +1,6 @@
 import random
 
-random.seed(1)
-
 print("\n")
-
 
 class Dice:
     def __init__(self, faces=6):
@@ -16,19 +13,19 @@ class Dice:
         return random.randint(1, self._faces)
 
 
-class RiggedDice:
-    pass
+class RiggedDice(Dice):
+    
+    def roll(self, rigged=False):
+        # if rigged:
+        #     return self._faces
+        # else:
+        #     return super().roll()
+        
+        return self._faces if rigged else super().roll()
+    
+if __name__ == "__main__":
+    a_dice = Dice()
+    print(a_dice)
 
-    # Elle doit hériter de Dice
-        # Elle doit polymorpher roll() qui accepte désormais un booléen "rigged"
-        # Si rigged est vrai
-            # Le dé est truqué
-        # Sinon
-            # Le dé n'est pas truqué
-
-
-a_dice = Dice()
-print(a_dice)
-
-for _ in range(100):
-    print(a_dice.roll())
+    for _ in range(10):
+        print(a_dice.roll())
