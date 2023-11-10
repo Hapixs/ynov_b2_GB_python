@@ -34,11 +34,11 @@ class Character:
         self._current_hp -= amount
         self.show_healthbar()
         
-    def attack(self):
+    def attack(self, target):
         roll = self._dice.roll()
         damages = self._attack_value + roll
         print(f"{self._name} attack with {damages} damages (attack: {self._attack_value} + roll: {roll})")
-        return damages
+        target.defense(damages)
     
     def defense(self, damages):
         roll = self._dice.roll()
@@ -47,9 +47,11 @@ class Character:
         self.decrease_health(wounds)
 
 if __name__ == "__main__":
-    character1 = Character("Salim", 20, 8, 3, Dice(6))
-    # character2 = Character("Lisa", 18, 7, 3, Dice(10))
+    character1 = Character("Salim", 20, 8, 3, Dice(12))
+    character2 = Character("Lisa", 20, 8, 3, Dice(12))
     print(character1)
+    print(character2)
     
-    damages = character1.attack()
-    character1.defense(damages)
+    while (character1.is_alive() and character2.is_alive()):
+        character1.attack(character2)
+        character2.attack(character1)
