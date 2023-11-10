@@ -4,12 +4,13 @@ from dice import Dice
 
 class Character:
     
-    def __init__(self, name, max_hp, attack, defense):
+    def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice):
         self._name = name
         self._max_hp = max_hp
         self._current_hp = max_hp
         self._attack_value = attack
         self._defense_value = defense
+        self._dice = dice
 
     def __str__(self):
         return f"""{self._name} the Character enter the arena with :
@@ -33,11 +34,22 @@ class Character:
         self._current_hp -= amount
         self.show_healthbar()
         
-    # attack
+    def attack(self):
+        roll = self._dice.roll()
+        damages = self._attack_value + roll
+        print(f"{self._name} attack with {damages} damages (attack: {self._attack_value} + roll: {roll})")
+        return damages
     
-    # defense
+    def defense(self, damages):
+        roll = self._dice.roll()
+        wounds = damages - self._defense_value - roll
+        print(f"{self._name} take {wounds} wounds (damages: {damages} - defense: {self._defense_value} - roll: {roll})")
+        self.decrease_health(wounds)
 
 if __name__ == "__main__":
-    
-    character1 = Character("Salim", 20, 8, 3)
+    character1 = Character("Salim", 20, 8, 3, Dice(6))
+    # character2 = Character("Lisa", 18, 7, 3, Dice(10))
     print(character1)
+    
+    damages = character1.attack()
+    character1.defense(damages)
