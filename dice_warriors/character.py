@@ -1,3 +1,4 @@
+from __future__ import annotations
 print("\n")
 
 from dice import Dice
@@ -34,7 +35,7 @@ class Character:
         self._current_hp -= amount
         self.show_healthbar()
         
-    def attack(self, target):
+    def attack(self, target: Character):
         roll = self._dice.roll()
         damages = self._attack_value + roll
         print(f"{self._name} attack with {damages} damages (attack: {self._attack_value} + roll: {roll})")
@@ -47,8 +48,8 @@ class Character:
         self.decrease_health(wounds)
 
 if __name__ == "__main__":
-    character1 = Character("Salim", 20, 8, 3, Dice(12))
-    character2 = Character("Lisa", 20, 8, 3, Dice(12))
+    character1 = Character("Salim", 20, 8, 3, Dice(6))
+    character2 = Character("Lisa", 20, 8, 3, Dice(6))
     print(character1)
     print(character2)
     
