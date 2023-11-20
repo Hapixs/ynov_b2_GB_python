@@ -3,6 +3,9 @@ print("\n")
 
 from dice import Dice
 
+class MessageManager():
+    pass
+
 class Character:
     
     def __init__(self, name: str, max_hp: int, attack: int, defense: int, dice: Dice):
@@ -32,25 +35,40 @@ class Character:
             self._current_hp = 0
         self.show_healthbar()
         
+    def compute_damages(self, roll):
+        return self._attack_value + roll
+        
     def attack(self, target: Character):
         if not self.is_alive():
             return
         roll = self._dice.roll()
-        damages = self._attack_value + roll
-        print(f"{self._name} attack with {damages} damages (attack: {self._attack_value} + roll: {roll})")
+        damages = self.compute_damages(roll)
+        print(f"⚔️ {self._name} attack with {damages} damages (attack: {self._attack_value} + roll: {roll})")
         target.defense(damages)
+    
+    def compute_defense(self, damages, roll):
+        return damages - self._defense_value - roll
     
     def defense(self, damages):
         roll = self._dice.roll()
-        wounds = damages - self._defense_value - roll
-        print(f"{self._name} take {wounds} wounds (damages: {damages} - defense: {self._defense_value} - roll: {roll})")
+        wounds = self.compute_defense(damages, roll)
+        print(f"🛡️ {self._name} take {wounds} wounds (damages: {damages} - defense: {self._defense_value} - roll: {roll})")
         self.decrease_health(wounds)
 
 class Warrior(Character):
-    pass
+    def compute_damages(self, roll):
+        print("🪓 Bonus: Axe in your face (+3 attack)")
+        return super().compute_damages(roll) + 3 
 
 class Mage(Character):
+    def compute_defense(self, damages, roll):
+        print("🧙 Bonus: Magic armor (-3 damages)")
+        return super().compute_defense(damages, roll) - 3
+
+class Thief(Character):
     pass
+    # Ignore la défense de son adversaire
+
 
 if __name__ == "__main__":
     character1 = Warrior("Salim", 20, 8, 3, Dice(6))
