@@ -18,22 +18,15 @@ class Character:
     ■ attack: {self._attack_value} 
     ■ defense: {self._defense_value}"""
         
-    
     def is_alive(self):
         return self._current_hp > 0       
-        # return bool(self._current_hp)
-        
-    # show_healthbar
-        # Elle affiche : [oooooooo            ] 8/20hp
-            # +++ En une ligne
+
     def show_healthbar(self):
         missing_hp = self._max_hp - self._current_hp
         healthbar = f"[{"♥" * self._current_hp}{"♡" * missing_hp}] {self._current_hp}/{self._max_hp}hp"
         print(healthbar)
 
     def decrease_health(self, amount):
-        # if self._current_hp - amount < 0:
-        #     amount = self._current_hp
         self._current_hp -= amount
         if self._current_hp < 0:
             self._current_hp = 0
